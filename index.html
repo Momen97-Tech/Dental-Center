@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+    body{
+        margin: 0;
+        padding: 0;
+        background: url("dentist.jpg")  center / cover;
+        background-attachment: fixed;
+        background-size: 120%;
+    }
+
+    .login{
+        width: 27%;
+        height: 38vh;
+        margin: auto;
+        margin-top: 25vh;
+        text-align: center;
+        border: 2px white solid;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.1); /* must be transparent */
+        backdrop-filter: blur(10px);
+    }
+    
+    #name , #password{
+        width: 250px;
+        height: 30px;
+        margin-top: 5%;
+        padding-left: 10px;
+        border: none;
+        border-left: black solid 2px;
+        transition-duration: 0.3s;
+    }
+
+    .enter , .delete{
+        width: 100px;
+        height: 35px;
+        margin-top: 40px;
+        border-radius: 5px;
+        font-size: 20px;
+        background-color: rgb(0, 0, 0 ,0);
+        transition-duration: 0.5s;
+    }
+
+    #name:focus , #password:focus{
+        transform: scale(1.06);
+        outline: none;
+    }
+
+    .enter:hover , .delete:hover{
+        background-color: #043d75;
+        color: white;
+    }
+
+    .enter:focus , .delete:focus{
+        background-color: #043d75;
+        color: white;
+    }
+    </style>
+    <link rel="icon" href="icon.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+</head>
+
+<body>
+    <div class="login">
+        <h1>Sign in</h1>
+        <form>
+            <input placeholder="User Name" title="User Name" id="name" type="text" value="doctor">
+            <br>
+            <input placeholder="password" title="Password" id="password" type="password" value="2020">
+            <div>
+                <input onclick="sign()" class="enter" type="button" value="Login">
+                <input onclick="playSound()" class="delete" type="reset" value="Delete">
+            </div>
+        </form>
+    </div>
+    
+    <script>
+        let name = document.getElementById("name");
+        let password = document.getElementById("password");
+
+        const addSound = new Audio("click.mp3");
+        function playSound(){
+            addSound.play();
+        }
+
+        const addWrongSound = new Audio("Wrong.mp3");
+        function playWrongSound(){
+            addWrongSound.play()
+        }
+
+        function sign(){
+            playSound()
+            if(name.value.toLowerCase() === "doctor" && password.value === "2020"){
+                window.location.href=("data.html")
+            }else{
+                playWrongSound()
+                alert("There is Wrong or Epmty Value!❌")
+            }
+        }
+        
+    </script>
+</body>
+</html>
