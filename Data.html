@@ -1,176 +1,305 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <style>
-        body{
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            background: url("dentist.jpg")  center / cover;
-            background-attachment: fixed;
-            background-size: 120%;
-        }
-
-        h1{
-            text-align: center;
-        }
-
-        #all{
-            width: 80%;
-            margin: auto;
-            text-align: center;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-        }
-
-        input{
-            width: 100%;
-            height: 40px;
-            margin: 6px 0;
-            padding-left: 5px;
-            border: none;
-            border-left: solid black 2px;
-            transition-duration:0.5s ;
-        }
-
-        input:focus{
-            outline: none;
-            transform:scale(1.06);
-        }
-
-        #cost , #pay , #remain , #date{
-            width: 21.5%;
-        }
-
-        .money{
-            display: flex;
-            justify-content: space-between;
-        }
-
-
-        /* Create and Delete Buttons */
-        .mainBtns{
-            margin-top: 15px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .mainBtns button{
-            width: 48%;
-            margin-bottom: 10px;
-            height: 50px;
-            font-size: large;
-            border-radius: 30px;
-            transition: 0.5s;
-        }
-
-        .mainBtns button:hover , #delAllBtn:hover{
-            letter-spacing: 5px;
-            background-color: #043d75;
-            color: white;
-        }
-
-        .mainBtns button:focus , #delAllBtn:focus{
-            letter-spacing: 5px;
-            background-color: #043d75;
-            color: white;
-        }
-
-
-        /* Search Section */
-        .searchBtns{
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .searchBtns button {
-            width: 22%;
-            height: 50px;
-            margin-top: 10px;
-            font-size: large;
-            border-radius: 30px;
-            transition: 0.5s;
-        }
-
-        .searchBtns button:hover{
-            letter-spacing: 2px;
-            background-color: #043d75;
-            color: white;
-        }
-
-        .searchBtns button:focus{
-            letter-spacing: 2px;
-            background-color: #043d75;
-            color: white;
-        }
-
-
-        /* Delete Button */
-        #delAllBtn{
-            width: 100%;
-            margin-top: 15px;
-            height: 50px;
-            font-size: large;
-            border-radius: 30px;
-            transition: 0.5s;
-        }
-
-
-        /* Table */
-        table{
-            width: 100%;
-            margin-top: 10px;
-        }
-
-        table th{
-            text-transform: capitalize;
-        }
-
-        td{
-            padding: 10px 0;
-        }
-
-        #btnUpdateTable , #btnDelTable{
-            width: 80%;
-            height: 40px;
-            font-size: 15px;
-            border-radius: 20px;
-            transition: 0.5s;
-        }
-
-        #btnUpdateTable:hover , #btnDelTable:hover{
-            background-color: #043d75;
-            color: white;            
-        }
-
-        
-    </style>
-    <link rel="icon" href="icon.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Clinic Data</title>
-</head>
+    <link rel="icon" href="icon.png">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
+        body {
+            background: url("dentist.jpg") center/cover no-repeat fixed;
+            background-size: cover;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            padding: 16px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: clamp(1.4rem, 4vw, 2.2rem);
+            color: #fff;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+            margin-bottom: 16px;
+            letter-spacing: 1px;
+        }
+
+        #all {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px 20px 30px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        /* ── Inputs ── */
+        input:not([type="button"]):not([type="reset"]):not([type="submit"]) {
+            width: 100%;
+            height: 42px;
+            margin: 5px 0;
+            padding: 0 10px 0 10px;
+            border: none;
+            border-left: 3px solid #043d75;
+            border-radius: 4px;
+            background: rgba(255,255,255,0.88);
+            font-size: 0.95rem;
+            color: #222;
+            transition: transform 0.35s, box-shadow 0.35s;
+        }
+
+        input:not([type="button"]):not([type="reset"]):not([type="submit"]):focus {
+            outline: none;
+            transform: scale(1.03);
+            box-shadow: 0 4px 14px rgba(4,61,117,0.2);
+        }
+
+        /* ── Money row ── */
+        .money {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin: 6px 0;
+        }
+
+        /* ── Main Buttons ── */
+        .mainBtns {
+            display: flex;
+            gap: 10px;
+            margin-top: 14px;
+            flex-wrap: wrap;
+        }
+
+        .mainBtns button {
+            flex: 1 1 45%;
+            min-width: 120px;
+            height: 48px;
+            font-size: 1rem;
+            border-radius: 30px;
+            border: 1.5px solid rgba(0,0,0,0.15);
+            background: rgba(255,255,255,0.75);
+            cursor: pointer;
+            transition: background 0.4s, color 0.4s, letter-spacing 0.3s;
+        }
+
+        .mainBtns button:hover,
+        .mainBtns button:focus,
+        #delAllBtn:hover,
+        #delAllBtn:focus {
+            letter-spacing: 3px;
+            background: #043d75;
+            color: white;
+            outline: none;
+        }
+
+        /* ── Search ── */
+        .searchBtns {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .searchBtns button {
+            height: 46px;
+            font-size: 0.85rem;
+            border-radius: 30px;
+            border: 1.5px solid rgba(0,0,0,0.15);
+            background: rgba(255,255,255,0.75);
+            cursor: pointer;
+            transition: background 0.4s, color 0.4s, letter-spacing 0.3s;
+            padding: 0 6px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .searchBtns button:hover,
+        .searchBtns button:focus {
+            letter-spacing: 1px;
+            background: #043d75;
+            color: white;
+            outline: none;
+        }
+
+        /* ── Delete All Button ── */
+        #delAllBtn {
+            width: 100%;
+            margin-top: 14px;
+            height: 48px;
+            font-size: 1rem;
+            border-radius: 30px;
+            border: 1.5px solid rgba(0,0,0,0.15);
+            background: rgba(255,255,255,0.75);
+            cursor: pointer;
+            transition: background 0.4s, color 0.4s, letter-spacing 0.3s;
+        }
+
+        /* ── Table Wrapper ── */
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 14px;
+            border-radius: 8px;
+        }
+
+        table {
+            width: 100%;
+            min-width: 700px;
+            border-collapse: collapse;
+            background: rgba(255,255,255,0.75);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        table th {
+            text-transform: capitalize;
+            background: #043d75;
+            color: #fff;
+            padding: 10px 8px;
+            font-size: 0.88rem;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        table td {
+            padding: 9px 7px;
+            font-size: 0.88rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(0,0,0,0.07);
+            color: #222;
+        }
+
+        table tr:last-child td {
+            border-bottom: none;
+        }
+
+        table tr:nth-child(even) {
+            background: rgba(4, 61, 117, 0.06);
+        }
+
+        /* ── Table action buttons ── */
+        .btnUpdateTable,
+        .btnDelTable {
+            width: 80px;
+            height: 34px;
+            font-size: 0.82rem;
+            border-radius: 20px;
+            border: 1px solid rgba(0,0,0,0.15);
+            background: rgba(255,255,255,0.8);
+            cursor: pointer;
+            transition: background 0.4s, color 0.3s;
+        }
+
+        .btnUpdateTable:hover,
+        .btnDelTable:hover {
+            background: #043d75;
+            color: white;
+        }
+
+        /* ════════════════════════════
+           RESPONSIVE BREAKPOINTS
+        ════════════════════════════ */
+
+        /* Tablet: 2-column money row */
+        @media (max-width: 768px) {
+            .money {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .searchBtns {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .mainBtns button {
+                font-size: 0.95rem;
+            }
+        }
+
+        /* Phone: full-width stacked */
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            #all {
+                padding: 14px 12px 20px;
+            }
+
+            .money {
+                grid-template-columns: 1fr 1fr;
+                gap: 6px;
+            }
+
+            .searchBtns {
+                grid-template-columns: 1fr 1fr;
+                gap: 6px;
+            }
+
+            .searchBtns button {
+                font-size: 0.78rem;
+                height: 42px;
+                letter-spacing: 0;
+            }
+
+            .mainBtns button {
+                flex: 1 1 100%;
+                font-size: 0.95rem;
+            }
+
+            table th,
+            table td {
+                font-size: 0.78rem;
+                padding: 7px 4px;
+            }
+
+            .btnUpdateTable,
+            .btnDelTable {
+                width: 64px;
+                height: 30px;
+                font-size: 0.75rem;
+            }
+        }
+
+        /* Very small phones */
+        @media (max-width: 360px) {
+            .money {
+                grid-template-columns: 1fr;
+            }
+
+            .searchBtns {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
 <body>
     <h1>Dental Center</h1>
     <div id="all">
         <input placeholder="Patient's Name" title="Patient's Name" id="name" type="text">
-        <input placeholder="Diagnosis" title="Diagnosis" id="diagnosis" type="text">
-        <input placeholder="Treatment" title="Treatment" id="treatment" type="text">
-        
+        <input placeholder="Diagnosis"       title="Diagnosis"       id="diagnosis" type="text">
+        <input placeholder="Treatment"       title="Treatment"       id="treatment" type="text">
+
         <div class="money">
-            <input title="Date" id="date" type="date">
-            <input placeholder="Cost" title="Cost" id="cost" type="number">
-            <input placeholder="Pay" title="Pay" id="pay" type="number">
+            <input title="Date"    id="date"   type="date">
+            <input placeholder="Cost"   title="Cost"   id="cost"   type="number">
+            <input placeholder="Pay"    title="Pay"    id="pay"    type="number">
             <input placeholder="Remain" title="Remain" id="remain" type="number" readonly>
         </div>
-        
+
         <div class="mainBtns">
             <button id="btnCreate">Create</button>
-            <button id="btnDelete" onclick="playSound() , clearalldata()">Delete</button>
+            <button id="btnDelete" onclick="playSound(); clearalldata()">Delete</button>
         </div>
-        
+
         <div class="search">
             <input id="search" placeholder="Search By Name" type="search">
             <div class="searchBtns">
@@ -183,234 +312,89 @@
 
         <div id="deleteAll"></div>
 
-        <table>
-            <tr>
-                <th>iD</th>
-                <th>patient's Name</th>
-                <th>diagnosis</th>
-                <th>treatment</th>
-                <th>date</th>
-                <th>cost</th>
-                <th>pay</th>
-                <th>remain</th>
-                <th>update</th>
-                <th>delete</th>
-            </tr>
-
-            <tbody id="tbody">
-
-            </tbody>
-        </table>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Patient's Name</th>
+                        <th>Diagnosis</th>
+                        <th>Treatment</th>
+                        <th>Date</th>
+                        <th>Cost</th>
+                        <th>Pay</th>
+                        <th>Remain</th>
+                        <th>Update</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody"></tbody>
+            </table>
+        </div>
     </div>
 
-    <!-- JavaScript Codes -->
     <script>
-        // Decalation of all Variables
-        let name = document.getElementById("name");
-        let diagnosis = document.getElementById("diagnosis");
-        let treatment = document.getElementById("treatment");
-        let date = document.getElementById("date");
-        let cost = document.getElementById("cost");
-        let pay = document.getElementById("pay");
-        let remain = document.getElementById("remain");
-        let btnCreate = document.getElementById("btnCreate");
-        let btnDelete = document.getElementById("btnDelete");
-        let deleteAll = document.getElementById("deleteAll");
-        let btnDelTable = document.getElementById("btnDelTable");
-        //      Search Variables 
-        let searchMood = "name";
-        let search = document.getElementById("search");
-        let btnName = document.getElementById("btnName");
-        let btnDiagnosis = document.getElementById("btnDiagnosis");
-        let btnTreatment = document.getElementById("btnTreatment");
-        let btnDate = document.getElementById("btnDate");
+        let nameEl      = document.getElementById("name");
+        let diagnosis   = document.getElementById("diagnosis");
+        let treatment   = document.getElementById("treatment");
+        let dateEl      = document.getElementById("date");
+        let cost        = document.getElementById("cost");
+        let pay         = document.getElementById("pay");
+        let remain      = document.getElementById("remain");
+        let btnCreate   = document.getElementById("btnCreate");
+        let deleteAll   = document.getElementById("deleteAll");
+        let search      = document.getElementById("search");
+        let btnName     = document.getElementById("btnName");
+        let btnDiagnosis= document.getElementById("btnDiagnosis");
+        let btnTreatment= document.getElementById("btnTreatment");
+        let btnDate     = document.getElementById("btnDate");
+
+        let searchMood  = "name";
         let tmp;
-        let mood = "create";
+        let mood        = "create";
 
-        // Sounds
-        const addSound = new Audio("click.mp3");
-        function playSound(){
-            addSound.play()
-        }
-
+        const addSound      = new Audio("click.mp3");
         const addWrongSound = new Audio("Wrong.mp3");
-        function playWrongSound(){
-            addWrongSound.play()
-        }
+        function playSound()      { addSound.play(); }
+        function playWrongSound() { addWrongSound.play(); }
 
-
-        // Create Button
-        //       Get Data from LoaclStorage
         let allData = JSON.parse(localStorage.getItem("clinicData")) || [];
-        btnCreate.onclick = function(){
-            playSound()
 
-            if(name.value.trim()===""){
-                playWrongSound()
+        btnCreate.onclick = function () {
+            playSound();
+            if (nameEl.value.trim() === "") {
+                playWrongSound();
                 alert("Name is required ❌");
-                name.focus();
+                nameEl.focus();
                 return;
             }
-
             let oneRecord = {
-                name : name.value.toLowerCase(),
-                diagnosis : diagnosis.value.toLowerCase(),
-                treatment : treatment.value.toLowerCase(),
-                date : date.value,
-                cost : cost.value,
-                pay : pay.value,
-                remain : remain.value
-            }
-            
-            if(mood === "create"){
+                name:      nameEl.value.toLowerCase(),
+                diagnosis: diagnosis.value.toLowerCase(),
+                treatment: treatment.value.toLowerCase(),
+                date:      dateEl.value,
+                cost:      cost.value,
+                pay:       pay.value,
+                remain:    remain.value
+            };
+            if (mood === "create") {
                 allData.push(oneRecord);
-            }else{
+            } else {
                 allData[tmp] = oneRecord;
-                mood ="create";
+                mood = "create";
                 btnCreate.innerHTML = "Create";
             }
-
-            //      Save Data to localStorage
             localStorage.setItem("clinicData", JSON.stringify(allData));
-            showdata()
-            clearalldata()
-        }
+            showdata();
+            clearalldata();
+        };
 
-
-        // Show Data in the table 
-        function showdata(){
+        function showdata() {
             let table = "";
-            for(let i = 0 ; i<allData.length ; i++){
-                table+=
-                `
-                    <tr>
-                        <td>${i+1}</td>
-                        <td>${allData[i].name}</td>
-                        <td>${allData[i].diagnosis}</td>
-                        <td>${allData[i].treatment}</td>
-                        <td>${allData[i].date}</td>
-                        <td>${allData[i].cost}</td>
-                        <td>${allData[i].pay}</td>
-                        <td>${allData[i].remain}</td>
-                        <td><button id="btnUpdateTable" onclick="updateData(${i})">Update</button></td>
-                        <td><button id="btnDelTable" onclick="btnDelTablef(${i})">Delete</button></td> 
-                    </tr>
-                
-                `
-            }
-
-            document.getElementById("tbody").innerHTML = table;
-            //      Delete All Button
-            if(allData.length > 0 ){
-                deleteAll.innerHTML = `
-                <button id= "delAllBtn" onclick="delAll()">Delete All Records(${allData.length})</button>
-                `
-            }else{
-                deleteAll.innerHTML = "";
-            }
-        }
-        showdata()
-
-
-        // Delte Inputs Items
-        function clearalldata(){
-            name.value = "";
-            diagnosis.value = "";
-            treatment.value = "";
-            date.value = "";
-            cost.value = "";
-            pay.value = "";
-            remain.value = "";
-        }
-
-        //  Delete one Record ( Delete Button in the Table )
-        function btnDelTablef(i){
-            playSound();
-            allData.splice(i,1);
-            localStorage.setItem("clinicData", JSON.stringify(allData));
-            showdata();
-        }
-
-        // Update one Record
-        function updateData(i){
-            playSound();
-            name.value = allData[i].name;
-            diagnosis.value = allData[i].diagnosis;
-            treatment.value = allData[i].treatment;
-            date.value = allData[i].date;
-            cost.value = allData[i].cost;
-            pay.value = allData[i].pay;
-            remain.value = allData[i].remain;
-            tmp = i;
-            mood = "update"
-            btnCreate.innerHTML = "Up Date"
-            scroll({
-                top:0,
-                behavior:"smooth"
-            })
-        }
-
-        // Delete all Records Functions
-        function delAll(){
-            let isConfirm = confirm("Do you really want to delete all data?");
-            if(isConfirm){
-            playSound();
-            localStorage.removeItem("clinicData");
-            allData.splice(0);
-            showdata();
-            }
-        }
-
-        // Get Total
-        function getTotal(){
-            let result = +cost.value - +pay.value
-            remain.value = result;
-        }
-        cost.oninput = getTotal;
-        pay.oninput = getTotal;
-
-        // Search Section 
-        btnName.onclick = function(){
-            playSound()
-            searchMood = "name";
-            search.placeholder = "Search By Name";
-            search.focus();
-        }
-
-        btnDiagnosis.onclick = function(){
-            playSound()
-            searchMood = "diagnosis";
-            search.placeholder = "Search By Diagnosis";
-            search.focus();
-        }
-
-        btnTreatment.onclick = function(){
-            playSound()
-            searchMood = "treatment";
-            search.placeholder = "Search By Treatment";
-            search.focus();
-        }
-
-        btnDate.onclick = function(){
-            playSound()
-            searchMood = "date";
-            search.placeholder = "Search By Date";
-            search.focus();
-        }
-
-        function searchData(value){
-        let table = "";
-
-        for(let i = 0; i < allData.length; i++){
-            if(
-                (searchMood === "name" && allData[i].name.includes(value)) ||
-                (searchMood === "diagnosis" && allData[i].diagnosis.includes(value)) ||
-                (searchMood === "treatment" && allData[i].treatment.includes(value)) ||
-                (searchMood === "date" && allData[i].date.includes(value))
-            ){
+            for (let i = 0; i < allData.length; i++) {
                 table += `
                     <tr>
-                        <td>${i+1}</td>
+                        <td>${i + 1}</td>
                         <td>${allData[i].name}</td>
                         <td>${allData[i].diagnosis}</td>
                         <td>${allData[i].treatment}</td>
@@ -418,18 +402,90 @@
                         <td>${allData[i].cost}</td>
                         <td>${allData[i].pay}</td>
                         <td>${allData[i].remain}</td>
-                        <td><button id="btnUpdateTable" onclick="updateData(${i}")>Update</button></td>
-                        <td><button id="btnDelTable" onclick="btnDelTablef(${i})">Delete</button></td>
-                    </tr>
-                `;
+                        <td><button class="btnUpdateTable" onclick="updateData(${i})">Update</button></td>
+                        <td><button class="btnDelTable"    onclick="btnDelTablef(${i})">Delete</button></td>
+                    </tr>`;
+            }
+            document.getElementById("tbody").innerHTML = table;
+            deleteAll.innerHTML = allData.length > 0
+                ? `<button id="delAllBtn" onclick="delAll()">Delete All Records (${allData.length})</button>`
+                : "";
+        }
+        showdata();
+
+        function clearalldata() {
+            nameEl.value = diagnosis.value = treatment.value =
+            dateEl.value = cost.value = pay.value = remain.value = "";
+        }
+
+        function btnDelTablef(i) {
+            playSound();
+            allData.splice(i, 1);
+            localStorage.setItem("clinicData", JSON.stringify(allData));
+            showdata();
+        }
+
+        function updateData(i) {
+            playSound();
+            nameEl.value    = allData[i].name;
+            diagnosis.value = allData[i].diagnosis;
+            treatment.value = allData[i].treatment;
+            dateEl.value    = allData[i].date;
+            cost.value      = allData[i].cost;
+            pay.value       = allData[i].pay;
+            remain.value    = allData[i].remain;
+            tmp  = i;
+            mood = "update";
+            btnCreate.innerHTML = "Update";
+            scroll({ top: 0, behavior: "smooth" });
+        }
+
+        function delAll() {
+            if (confirm("Do you really want to delete all data?")) {
+                playSound();
+                localStorage.removeItem("clinicData");
+                allData.splice(0);
+                showdata();
             }
         }
 
-        document.getElementById("tbody").innerHTML = table;
+        function getTotal() { remain.value = +cost.value - +pay.value; }
+        cost.oninput = getTotal;
+        pay.oninput  = getTotal;
+
+        btnName.onclick      = () => { playSound(); searchMood = "name";      search.placeholder = "Search By Name";      search.focus(); };
+        btnDiagnosis.onclick = () => { playSound(); searchMood = "diagnosis"; search.placeholder = "Search By Diagnosis"; search.focus(); };
+        btnTreatment.onclick = () => { playSound(); searchMood = "treatment"; search.placeholder = "Search By Treatment"; search.focus(); };
+        btnDate.onclick      = () => { playSound(); searchMood = "date";      search.placeholder = "Search By Date";      search.focus(); };
+
+        function searchData(value) {
+            let table = "";
+            for (let i = 0; i < allData.length; i++) {
+                if (
+                    (searchMood === "name"      && allData[i].name.includes(value))      ||
+                    (searchMood === "diagnosis" && allData[i].diagnosis.includes(value)) ||
+                    (searchMood === "treatment" && allData[i].treatment.includes(value)) ||
+                    (searchMood === "date"      && allData[i].date.includes(value))
+                ) {
+                    table += `
+                        <tr>
+                            <td>${i + 1}</td>
+                            <td>${allData[i].name}</td>
+                            <td>${allData[i].diagnosis}</td>
+                            <td>${allData[i].treatment}</td>
+                            <td>${allData[i].date}</td>
+                            <td>${allData[i].cost}</td>
+                            <td>${allData[i].pay}</td>
+                            <td>${allData[i].remain}</td>
+                            <td><button class="btnUpdateTable" onclick="updateData(${i})">Update</button></td>
+                            <td><button class="btnDelTable"    onclick="btnDelTablef(${i})">Delete</button></td>
+                        </tr>`;
+                }
+            }
+            document.getElementById("tbody").innerHTML = table;
         }
-        search.onkeyup = function(){
-        searchData(this.value.toLowerCase());
-        }
+
+        search.onkeyup = function () { searchData(this.value.toLowerCase()); };
     </script>
 </body>
 </html>
